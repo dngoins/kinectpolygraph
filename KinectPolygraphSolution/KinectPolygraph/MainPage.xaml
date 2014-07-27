@@ -17,6 +17,22 @@
                 <TextBlock Text="Extended Eye Blink Count:" FontSize="40"></TextBlock>
                 <TextBlock x:Name="txtExtendedBlinkCount" FontSize="40" Text="{Binding Path=EyeBlinkCount}"></TextBlock>
             </StackPanel>
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Eye Brows Count:" FontSize="40"></TextBlock>
+                <TextBlock x:Name="txtEyeBrowCount" FontSize="40" Text="{Binding Path=EyeBrowCount}"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Speech Gap Count:" FontSize="40"></TextBlock>
+                <TextBlock x:Name="txtSpeechGapCount" FontSize="40" Text="{Binding Path=SpeechGapCount}"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Nose Touch Count:" FontSize="40"></TextBlock>
+                <TextBlock x:Name="txtNoseTouchCount" FontSize="40" Text="{Binding Path=NoseTouchCount}"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Mouth Cover Count:" FontSize="40"></TextBlock>
+                <TextBlock x:Name="txtMouthCoverCount" FontSize="40" Text="{Binding Path=MouthCoverCount}"></TextBlock>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>

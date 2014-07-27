@@ -17,13 +17,13 @@ namespace KinectPolygraph
 
     public delegate void LossOfEyeContactArrivedEventHandler(object sender, LossOfEyeContactArrivedEventArgs args);
 
-    public delegate void GulpingArrivedEventHandler(object sender, GulpingArrivedEventArgs args);
-
+  
 
     public class FacialMicroExpressions : baseAnalysis
     {
         KinectSensor _sensor;
         private ulong _trackingId;
+        private MultiSourceFrame _sourceFrame;
         private MultiSourceFrameReader _msReader;
         private FaceFrameSource _faceSource;
         private FaceFrameReader _faceReader;
@@ -32,20 +32,31 @@ namespace KinectPolygraph
         private FaceAlignment _faceAlignment;
         private HighDefinitionFaceFrameSource _hdSource;
         private HighDefinitionFaceFrameReader _hdReader;
-        private float _leftBrowDelta;
-        private float _rightBrowDelta;
-        private float _leftBrow;
-        private float _rightBrow;
+        private float[] _leftBrowDelta;
+        private float[] _rightBrowDelta;
+        private float[] _leftBrow;
+        private float[] _rightBrow;
+        private int browToleranceCount;
+        private int mouthCoverToleranceCount;
+        private int lookAwayToleranceCount;
+        
+        private bool _captureStarted;
+        private int ndx; 
         public FacialMicroExpressions(KinectSensor sensor)
         {
             _sensor = sensor;
-            _eyesState = EyesState.Opened ;
-            _msReader = _sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Body | FrameSourceTypes.Depth | FrameSourceTypes.Infrared);
-            _faceSource = new FaceFrameSource(_sensor, 0, FaceFrameFeatures.FaceEngagement | FaceFrameFeatures.LeftEyeClosed | FaceFrameFeatures.LookingAway | FaceFrameFeatures.FaceEngagement | FaceFrameFeatures.Happy | FaceFrameFeatures.MouthMoved | FaceFrameFeatures.MouthOpen | FaceFrameFeatures.RightEyeClosed | FaceFrameFeatures.RotationOrientation);
+          //  _msReader = source;
+            _eyesState = EyesState.Opened;
+            this._faceAlignment = new FaceAlignment();
+            this._leftBrow = new float[30];
+            this._rightBrow = new float[30];
+            this._leftBrowDelta = new float[30];
+            this._rightBrowDelta = new float[30];
 
+            _faceSource = new FaceFrameSource(_sensor, 0, FaceFrameFeatures.FaceEngagement | FaceFrameFeatures.LeftEyeClosed | FaceFrameFeatures.LookingAway | FaceFrameFeatures.FaceEngagement | FaceFrameFeatures.Happy | FaceFrameFeatures.MouthMoved | FaceFrameFeatures.MouthOpen | FaceFrameFeatures.RightEyeClosed | FaceFrameFeatures.RotationOrientation);
             _faceReader = _faceSource.OpenReader();
             _faceReader.FrameArrived += _faceReader_FrameArrived;
-            _msReader.MultiSourceFrameArrived += _msReader_MultiSourceFrameArrived;
+            // _msReader.MultiSourceFrameArrived += _msReader_MultiSourceFrameArrived;
 
             //TODO: Use HDFace to dermine gulping, Eyebrows
             _hdSource = new HighDefinitionFaceFrameSource(_sensor);
@@ -55,45 +66,91 @@ namespace KinectPolygraph
             
         }
 
+        public void stopCapture()
+        {
+            _captureStarted = false;
+        }
+
+        public void startCapture(Body body)
+        {
+            if (_captureStarted) return;
+
+            _captureStarted = true;
+            if (body.IsTracked && _trackingId == 0)
+            {
+                _trackingId = body.TrackingId;
+
+                //now set the face tracking to determine eye blinking and loss of eyecontact
+                _faceSource.TrackingId = _trackingId;
+                _hdSource.TrackingId = _trackingId;
+
+            }
+            
+           
+        }
+
         void _hdReader_FrameArrived(HighDefinitionFaceFrameReader sender, HighDefinitionFaceFrameArrivedEventArgs args)
         {
 
             using (var hdFaceFrame = args.FrameReference.AcquireFrame())
             {
-                hdFaceFrame.GetAndRefreshFaceAlignmentResult(this._faceAlignment);
-                var animationUnits = this._faceAlignment.AnimationUnits;
-                float leftValue = 0.0f;
-                float rightValue = 0.0f;
-
-                foreach (var animUnit in animationUnits
-                    )
+                if (hdFaceFrame != null && _hdSource.TrackingId != 0)
                 {
-
-                    if (animUnit.Key == FaceShapeAnimations.LefteyebrowLowerer)
+                    hdFaceFrame.GetAndRefreshFaceAlignmentResult(this._faceAlignment);
+                    var animationUnits = this._faceAlignment.AnimationUnits;
+                    
+                    if (_faceAlignment.Quality == FaceAlignmentQuality.High)
                     {
-                        leftValue = animUnit.Value;
-                        // StatusText = string.Format("LeftEyebrow: {0}", val);
+                        foreach (var animUnit in animationUnits)
+                        {
+                           
+                            if (animUnit.Key == FaceShapeAnimations.LefteyebrowLowerer)
+                            {
+                                _leftBrow[ndx] = animUnit.Value;
 
+                            }
+
+                            if (animUnit.Key == FaceShapeAnimations.RighteyebrowLowerer)
+                            {
+                                _rightBrow[ndx] = animUnit.Value;
+
+                            }
+                            ndx++;
+                            if (ndx == 30)
+                            {
+                                ndx = 0;
+                                //get average brow movements
+                                var leftBrowMovementSum = 0.0f;
+                                var rightBrowMovementSum = 0.0f;
+                                for (int i = 0; i < 30; i++ )
+                                {
+                                    leftBrowMovementSum+= _leftBrow[i];
+                                    rightBrowMovementSum += _rightBrow[i];
+                                    
+                                }
+                                _rightBrowDelta[0] = _rightBrowDelta[1];
+                                _leftBrowDelta[0] = _leftBrowDelta[1];
+                                _rightBrowDelta[1] = rightBrowMovementSum / 30;
+                                _leftBrowDelta[1] = leftBrowMovementSum / 30;                   
+
+                            }
+
+                            var rightBrowDiff = Math.Abs(_rightBrowDelta[1] * _rightBrowDelta[1] - _rightBrowDelta[0] * _rightBrowDelta[0]);
+                            var leftBrowDiff = Math.Abs(_leftBrowDelta[1] * _leftBrowDelta[1] - _leftBrowDelta[0] * _leftBrowDelta[0]);
+
+                            if (leftBrowDiff > 0.0015 && rightBrowDiff > 0.0015)
+                            {
+                                browToleranceCount++;
+                                if (browToleranceCount > 350)
+                                {
+                                    OnEyebrowsDrawnUpArrived(new EyebrowsDrawnUpArrivedEventArgs() { Confidence = 1.0f });
+                                    browToleranceCount = 0;
+                                }
+                            }
+                           
+
+                        }
                     }
-
-                    if (animUnit.Key == FaceShapeAnimations.RighteyebrowLowerer)
-                    {
-                        rightValue = animUnit.Value;
-                        //StatusText = string.Format("RightEyebrow: {0}", val);
-
-                    }
-
-                    _rightBrowDelta = rightValue > _rightBrow ?  rightValue / _rightBrow : _rightBrow / rightValue ;
-                    _leftBrowDelta = leftValue > _leftBrow ? leftValue / _leftBrow : _leftBrow /leftValue ;
-
-                    if (_rightBrowDelta >= .5 && _leftBrowDelta >= .5 )
-                    {
-                        OnEyebrowsDrawnUpArrived(new EyebrowsDrawnUpArrivedEventArgs(){ Confidence= 1.0f });
-
-                    }
-                    _rightBrow = rightValue;
-                    _leftBrow = leftValue;
-
                 }
             }
         }
@@ -121,8 +178,12 @@ namespace KinectPolygraph
                     {
                         //here we can use a more customized algorithm to time it and look for false positives.
                         //but for this demo we will simply raise the LossEyeContact Event
-                        OnLossOfEyeContactArrived(new LossOfEyeContactArrivedEventArgs() { Confidence = 1.0f });
-
+                        lookAwayToleranceCount++;
+                        if (lookAwayToleranceCount >= 30)
+                        {
+                            OnLossOfEyeContactArrived(new LossOfEyeContactArrivedEventArgs() { Confidence = 1.0f });
+                            lookAwayToleranceCount = 0;
+                        }
                         //no need to check for eyes becuase user is looking away
                         return;
                     }
@@ -177,17 +238,7 @@ namespace KinectPolygraph
 
         }
 
-        public event GulpingArrivedEventHandler GulpingArrived;
-
-
-        protected virtual void OnGulpingArrived(GulpingArrivedEventArgs e)
-        {
-            if (GulpingArrived != null)
-            {
-                GulpingArrived(this, e);
-            }
-
-        }
+    
 
         public event ExtendedBlinkArrivedEventHandler ExtendedBlinkArrived;
 
