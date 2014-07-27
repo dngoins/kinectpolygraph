@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
+  <Identity Name="64050542-5743-464f-a480-5d23d60e8519" Publisher="CN=Dwight" Version="1.0.0.0" />
+  <Properties>
+    <DisplayName>KinectPolygraph</DisplayName>
+    <PublisherDisplayName>Dwight</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.3.0</OSMinVersion>
+    <OSMaxVersionTested>6.3.0</OSMaxVersionTested>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="KinectPolygraph.App">
+      <m2:VisualElements DisplayName="KinectPolygraph" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="This project was created at the Kinect Hackathon in Redmong Washing at Microsoft Bldg 20 in about 12 hours. It is a Windows 8.1 Store application that utilizes the Kinect Audio, Color, Depth, IR, Body, Body Index, and Face Recognition. These kinect sources are  used to evaluate simple facial micro expressions, audio pitch, and body movements to determine is a person is lying, similar to a polygraph test." ForegroundText="light" BackgroundColor="#464646">
+        <m2:SplashScreen Image="Assets\SplashScreen.png" />
+      </m2:VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <DeviceCapability Name="microphone" />
+    <DeviceCapability Name="webcam" />
+  </Capabilities>
+</Package>

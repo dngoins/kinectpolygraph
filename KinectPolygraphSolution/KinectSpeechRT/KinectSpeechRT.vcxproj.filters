@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>8347e55c-8ebe-480a-961e-9d11d384a308</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="NuiDatabase">
+      <UniqueIdentifier>{6f68d036-5290-45aa-b357-c30a1de89aec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NuiDatabase\HDFaceTracker">
+      <UniqueIdentifier>{74aa213a-627b-4e0d-9d66-dac5843b9673}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NuiDatabase\HDFaceTracker\WholeHeadModel">
+      <UniqueIdentifier>{8af1e136-068a-41f1-a693-10fa6a4bb201}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NuiDatabase\HDFaceTracker\ViewModel">
+      <UniqueIdentifier>{053cf171-4086-4e17-8861-fca7a45dce89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NuiDatabase\HDFaceTracker\SkintoneModel">
+      <UniqueIdentifier>{f52010ab-f10d-41e4-bd1b-908ffc185ab5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NuiDatabase\HDFaceTracker\MouthModel">
+      <UniqueIdentifier>{9be3266a-6b7f-48e8-97c8-660a887c7e35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NuiDatabase\HDFaceTracker\EyeState">
+      <UniqueIdentifier>{d2baf8e2-ede0-4a85-a041-1d4e5a2be17b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NuiDatabase\HDFaceTracker\EvalModel">
+      <UniqueIdentifier>{7ecc26f7-b433-420b-b607-2437fbaf4b3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NuiDatabase\HDFaceTracker\AAMModel">
+      <UniqueIdentifier>{b4e881a2-d6dd-436b-978d-c89a51f18098}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NuiDatabase\Expression">
+      <UniqueIdentifier>{ee621a50-f7ca-4e88-af16-eb2228b8641b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="KinectSpeech.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="KinectSpeech.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="NuiDatabase\HDFaceTracker\WholeHeadModel\fullMeanHead60_tri.ply">
+      <Filter>NuiDatabase\HDFaceTracker\WholeHeadModel</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\ViewModel\right.mod.bin">
+      <Filter>NuiDatabase\HDFaceTracker\ViewModel</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\ViewModel\left.mod.bin">
+      <Filter>NuiDatabase\HDFaceTracker\ViewModel</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\ViewModel\front.mod.bin">
+      <Filter>NuiDatabase\HDFaceTracker\ViewModel</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\MouthModel\lopen.mod.bin">
+      <Filter>NuiDatabase\HDFaceTracker\MouthModel</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\MouthModel\close.mod.bin">
+      <Filter>NuiDatabase\HDFaceTracker\MouthModel</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\EyeState\LeftOpenRightClose44Flip.wgh">
+      <Filter>NuiDatabase\HDFaceTracker\EyeState</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\EyeState\LeftOpenRightClose44Flip.pra">
+      <Filter>NuiDatabase\HDFaceTracker\EyeState</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\EyeState\LeftCloseRightOpen44Flip.wgh">
+      <Filter>NuiDatabase\HDFaceTracker\EyeState</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\EyeState\LeftCloseRightOpen44Flip.pra">
+      <Filter>NuiDatabase\HDFaceTracker\EyeState</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\EyeState\EyeClose.wgh">
+      <Filter>NuiDatabase\HDFaceTracker\EyeState</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\EyeState\EyeClose.pra">
+      <Filter>NuiDatabase\HDFaceTracker\EyeState</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\EvalModel\right_nose.mod.bin">
+      <Filter>NuiDatabase\HDFaceTracker\EvalModel</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\EvalModel\right.mod.bin">
+      <Filter>NuiDatabase\HDFaceTracker\EvalModel</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\EvalModel\left_nose.mod.bin">
+      <Filter>NuiDatabase\HDFaceTracker\EvalModel</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\EvalModel\left.mod.bin">
+      <Filter>NuiDatabase\HDFaceTracker\EvalModel</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\EvalModel\front_nose.mod.bin">
+      <Filter>NuiDatabase\HDFaceTracker\EvalModel</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\EvalModel\front.mod.bin">
+      <Filter>NuiDatabase\HDFaceTracker\EvalModel</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\AAMModel\PCAMaskBias.bin">
+      <Filter>NuiDatabase\HDFaceTracker\AAMModel</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\AAMModel\AAMModelData_HRP.bin">
+      <Filter>NuiDatabase\HDFaceTracker\AAMModel</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\AAMModel\AAMModelData_HLP.bin">
+      <Filter>NuiDatabase\HDFaceTracker\AAMModel</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\AAMModel\AAMModelData_F.bin">
+      <Filter>NuiDatabase\HDFaceTracker\AAMModel</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\AAMModel\3DModel_globalPCA.bin">
+      <Filter>NuiDatabase\HDFaceTracker\AAMModel</Filter>
+    </None>
+    <None Include="NuiDatabase\HDFaceTracker\AAMModel\3DModel.bin">
+      <Filter>NuiDatabase\HDFaceTracker\AAMModel</Filter>
+    </None>
+    <None Include="NuiDatabase\FaceTrackingColor27.bin">
+      <Filter>NuiDatabase</Filter>
+    </None>
+    <None Include="NuiDatabase\FaceOrientation.bin">
+      <Filter>NuiDatabase</Filter>
+    </None>
+    <None Include="NuiDatabase\FaceDetector.bin">
+      <Filter>NuiDatabase</Filter>
+    </None>
+    <None Include="NuiDatabase\FaceAlignmentColor27.bin">
+      <Filter>NuiDatabase</Filter>
+    </None>
+    <None Include="NuiDatabase\FaceAlignmentColor.bin">
+      <Filter>NuiDatabase</Filter>
+    </None>
+    <None Include="NuiDatabase\FaceAlignment.bin">
+      <Filter>NuiDatabase</Filter>
+    </None>
+    <None Include="NuiDatabase\Expression\MouthOpenRandomForest.model">
+      <Filter>NuiDatabase\Expression</Filter>
+    </None>
+    <None Include="NuiDatabase\Expression\MouthMovedRandomForest.model">
+      <Filter>NuiDatabase\Expression</Filter>
+    </None>
+    <None Include="NuiDatabase\Expression\LookingAwayRandomForest.model">
+      <Filter>NuiDatabase\Expression</Filter>
+    </None>
+    <None Include="NuiDatabase\Expression\GlassesRandomForest.model">
+      <Filter>NuiDatabase\Expression</Filter>
+    </None>
+    <None Include="NuiDatabase\Expression\GlassesIRRandomForest.model">
+      <Filter>NuiDatabase\Expression</Filter>
+    </None>
+    <None Include="NuiDatabase\Expression\Feature.config">
+      <Filter>NuiDatabase\Expression</Filter>
+    </None>
+    <None Include="NuiDatabase\Expression\FacialHairRandomForest.model">
+      <Filter>NuiDatabase\Expression</Filter>
+    </None>
+    <None Include="NuiDatabase\Expression\FacialHairIRRandomForest.model">
+      <Filter>NuiDatabase\Expression</Filter>
+    </None>
+    <None Include="NuiDatabase\Expression\EyeRightRandomForest.model">
+      <Filter>NuiDatabase\Expression</Filter>
+    </None>
+    <None Include="NuiDatabase\Expression\EyeLeftRandomForest.model">
+      <Filter>NuiDatabase\Expression</Filter>
+    </None>
+    <None Include="NuiDatabase\Expression\ExpressionRandomForest.model">
+      <Filter>NuiDatabase\Expression</Filter>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="NuiDatabase\HDFaceTracker\WholeHeadModel\FullHeadMaskVertexCorrespondence.txt">
+      <Filter>NuiDatabase\HDFaceTracker\WholeHeadModel</Filter>
+    </Text>
+    <Text Include="NuiDatabase\HDFaceTracker\ViewModel\right.p.txt">
+      <Filter>NuiDatabase\HDFaceTracker\ViewModel</Filter>
+    </Text>
+    <Text Include="NuiDatabase\HDFaceTracker\ViewModel\left.p.txt">
+      <Filter>NuiDatabase\HDFaceTracker\ViewModel</Filter>
+    </Text>
+    <Text Include="NuiDatabase\HDFaceTracker\ViewModel\front.p.txt">
+      <Filter>NuiDatabase\HDFaceTracker\ViewModel</Filter>
+    </Text>
+    <Text Include="NuiDatabase\HDFaceTracker\SkintoneModel\skintone_shape_classifier.txt">
+      <Filter>NuiDatabase\HDFaceTracker\SkintoneModel</Filter>
+    </Text>
+    <Text Include="NuiDatabase\HDFaceTracker\SkintoneModel\skintone_appearance_classifier.txt">
+      <Filter>NuiDatabase\HDFaceTracker\SkintoneModel</Filter>
+    </Text>
+    <Text Include="NuiDatabase\HDFaceTracker\MouthModel\MeanShapes.txt">
+      <Filter>NuiDatabase\HDFaceTracker\MouthModel</Filter>
+    </Text>
+    <Text Include="NuiDatabase\HDFaceTracker\MouthModel\lopen.p.txt">
+      <Filter>NuiDatabase\HDFaceTracker\MouthModel</Filter>
+    </Text>
+    <Text Include="NuiDatabase\HDFaceTracker\MouthModel\close.p.txt">
+      <Filter>NuiDatabase\HDFaceTracker\MouthModel</Filter>
+    </Text>
+    <Text Include="NuiDatabase\HDFaceTracker\EvalModel\right.p.txt">
+      <Filter>NuiDatabase\HDFaceTracker\EvalModel</Filter>
+    </Text>
+    <Text Include="NuiDatabase\HDFaceTracker\EvalModel\left.p.txt">
+      <Filter>NuiDatabase\HDFaceTracker\EvalModel</Filter>
+    </Text>
+    <Text Include="NuiDatabase\HDFaceTracker\EvalModel\Front.p.txt">
+      <Filter>NuiDatabase\HDFaceTracker\EvalModel</Filter>
+    </Text>
+    <Text Include="NuiDatabase\HDFaceTracker\AAMModel\Map2D3D_HRP.txt">
+      <Filter>NuiDatabase\HDFaceTracker\AAMModel</Filter>
+    </Text>
+    <Text Include="NuiDatabase\HDFaceTracker\AAMModel\Map2D3D_HLP.txt">
+      <Filter>NuiDatabase\HDFaceTracker\AAMModel</Filter>
+    </Text>
+    <Text Include="NuiDatabase\HDFaceTracker\AAMModel\Map2D3D_F.txt">
+      <Filter>NuiDatabase\HDFaceTracker\AAMModel</Filter>
+    </Text>
+    <Text Include="NuiDatabase\Expression\NuiExpressionModelManifest.txt">
+      <Filter>NuiDatabase\Expression</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
