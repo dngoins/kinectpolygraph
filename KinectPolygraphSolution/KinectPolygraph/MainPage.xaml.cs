@@ -208,8 +208,8 @@ namespace KinectPolygraph
 
             _microExpressions.EyebrowsDrawnUpArrived += _microExpressions_EyebrowsDrawnUpArrived;
 
-            //_verbalAnalysis = new VerbalAnalysis(_audioSource );
-            //_verbalAnalysis.SpeechPauseArrived += _verbalAnalysis_SpeechPauseArrived;
+            _verbalAnalysis = new VerbalAnalysis(_audioSource );
+            _verbalAnalysis.SpeechPauseArrived += _verbalAnalysis_SpeechPauseArrived;
 
             _bodyAnalysis = new BodyAnalysis(_sensor);
             _bodyAnalysis.NoseTouchArrived += _bodyAnalysis_NoseTouchArrived;
@@ -217,8 +217,8 @@ namespace KinectPolygraph
 
            
             
-            this.wBitmap = new WriteableBitmap(_sensor.ColorFrameSource.FrameDescription.Width, _sensor.ColorFrameSource.FrameDescription.Height);
-            this.stream = this.wBitmap.PixelBuffer.AsStream();
+         //   this.wBitmap = new WriteableBitmap(_sensor.ColorFrameSource.FrameDescription.Width, _sensor.ColorFrameSource.FrameDescription.Height);
+         //   this.stream = this.wBitmap.PixelBuffer.AsStream();
 
             StartInitialAnimations();
         }
@@ -267,7 +267,7 @@ namespace KinectPolygraph
                    {
                        if (body.IsTracked)
                        {
-                           PersonFound.Text = "Tracked Id:" + body.TrackingId ;
+                           PersonFound.Text = string.Format("Tracked Id: {0}" , body.TrackingId );
                            _microExpressions.startCapture(body);
                            _bodyAnalysis.startCapture(body);
                            return;

@@ -25,7 +25,7 @@
                 
             </StackPanel>
             <StackPanel Margin="10">
-                <TextBlock x:Name="PersonFound" FontSize="40" Foreground="Blue" Text="" />
+                <TextBlock x:Name="PersonFound" FontSize="40" Foreground="Red" Text="" />
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock Text="Lost Eye Contact Count:" FontSize="40"/>
                     <TextBlock x:Name="txtEyeContactLostCount" FontSize="40" Text="{Binding LostContactCount}"/>
