@@ -147,8 +147,11 @@ namespace KinectPolygraph
                         {
                            using(var depthFrame = faceFrame.DepthFrameReference.AcquireFrame())
                            {
-                              
-                                   depthFrame.CopyFrameDataToArray(this.depthFrameData);                              
+
+                               if (depthFrame != null)
+                               {
+                                   depthFrame.CopyFrameDataToArray(this.depthFrameData);
+                               }
                            }
                             
                             //get hands and check for touching nose and/or covering mouth

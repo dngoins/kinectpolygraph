@@ -138,7 +138,7 @@ namespace KinectPolygraph
                             var rightBrowDiff = Math.Abs(_rightBrowDelta[1] * _rightBrowDelta[1] - _rightBrowDelta[0] * _rightBrowDelta[0]);
                             var leftBrowDiff = Math.Abs(_leftBrowDelta[1] * _leftBrowDelta[1] - _leftBrowDelta[0] * _leftBrowDelta[0]);
 
-                            if (leftBrowDiff > 0.0015 && rightBrowDiff > 0.0015)
+                            if (leftBrowDiff > 0.015 && rightBrowDiff > 0.015)
                             {
                                 browToleranceCount++;
                                 if (browToleranceCount > 350)
@@ -203,7 +203,7 @@ namespace KinectPolygraph
                     else if ( _eyesState == EyesState.Closed )
                     {
                         var differenceTickCount = System.Environment.TickCount - _eyeClosedTickCount;
-                        if (differenceTickCount > 40)
+                        if (differenceTickCount > 60)
                        {
                             //Raise an extended eye blink
                             OnExtendedBlinkArrived(new ExtendedBlinkArrivedEventArgs() { Confidence = 1.0f });
