@@ -48,7 +48,7 @@ namespace KinectPolygraph
         private const int cColorHeight = 1080;
         private  uint bytesPerPixel;
         private string[] questions;
-        private int questionIndex;
+        private int questionIndex = -1;
         private Dictionary<string, float> baseResult;
         private Dictionary<string, float> baseLieResult;
         private Dictionary<string, float> results;
@@ -147,11 +147,16 @@ namespace KinectPolygraph
         
         public MainPage()
         {
+            
             this.InitializeComponent();
+          //  gifAnimation.PlayOnLoad = false;
+            //gifAnimation.ImageUrl = "/Images/piconocio-nolie-o.gif";
+
             this.Loaded += MainPage_Loaded;
             this.Unloaded += MainPage_Unloaded;           
             this.DataContext = this;
 
+            //TODO: Load questions from a repository
             this.questions = new string[10];
             questions[0] = "Are you a Male gender?";
             questions[1] = "Are you 2 feet tall?";
@@ -187,7 +192,7 @@ namespace KinectPolygraph
         void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             _sensor = KinectSensor.GetDefault();
-            
+           
             this.bytesPerPixel = _sensor.ColorFrameSource.FrameDescription.BytesPerPixel;
             this.colorPixels = new byte[cColorWidth * cColorHeight * this.bytesPerPixel];
             _msReader = _sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Body| FrameSourceTypes.BodyIndex | FrameSourceTypes.Color | FrameSourceTypes.Depth | FrameSourceTypes.Infrared );
@@ -229,13 +234,11 @@ namespace KinectPolygraph
         }
          private void RenderColorPixels(byte[] pixels)
         {
+             //TODO: add a video view of the user
             stream.Seek(0, SeekOrigin.Begin);
             stream.Write(pixels, 0, pixels.Length);
             wBitmap.Invalidate();
-           // mainImage.Source = wBitmap;
-
-
-
+           
         }
         void _bodyAnalysis_NoseTouchArrived(object sender, NoseTouchArrivedEventArgs args)
         {
@@ -264,19 +267,26 @@ namespace KinectPolygraph
                    {
                        if (body.IsTracked)
                        {
+                           PersonFound.Text = "Tracked Id:" + body.TrackingId ;
                            _microExpressions.startCapture(body);
                            _bodyAnalysis.startCapture(body);
                            return;
                        }
                        else
+                       {
                            _microExpressions.stopCapture();
+                           PersonFound.Text = "Body not found";
+                       }
                    }
                }
+               
            }
         }
 
         void StartInitialAnimations()
         {
+            //was going to use some form of animation 
+            //but decided against it...
             // Start the animation
             //VisualStateManager.GoToState(this, VSG_Attract.Name, true);
         }
@@ -293,130 +303,193 @@ namespace KinectPolygraph
             LostContactCount = _eyeContactLostCount;
         }
 
+        
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
+            if (questionIndex == -1) return;
 
-            if (questionIndex == 10)
-            {
-                questionIndex = 0; baseResult.Clear();
-                baseLieResult.Clear();
-                results.Clear();
-            }
-
-
-            CurrentQuestion = questions[questionIndex];
             
-            if (questionIndex == 2)
+            if (questionIndex <= 2)
             {
                 //get results from normal truths
-                baseResult.Add("LookAway", LostContactCount);
+                baseResult.Add("LookAway" + questionIndex.ToString(), LostContactCount);
                 LostContactCount = 0;
-                baseResult.Add("MouthTouch", MouthCoverCount);
+                baseResult.Add("MouthTouch" + questionIndex.ToString(), MouthCoverCount);
                 MouthCoverCount = 0;
-                baseResult.Add("NoseTouch", NoseTouchCount);
+                baseResult.Add("NoseTouch" + questionIndex.ToString(), NoseTouchCount);
                 NoseTouchCount = 0;
-                baseResult.Add("SpeechGap", SpeechGapCount);
+                baseResult.Add("SpeechGap" + questionIndex.ToString(), SpeechGapCount);
                 SpeechGapCount = 0;
-                baseResult.Add("EyeBrows", EyeBrowCount);
+                baseResult.Add("EyeBrows" + questionIndex.ToString(), EyeBrowCount);
                 EyeBrowCount = 0;
-                baseResult.Add("EyeBlink", EyeBlinkCount);
+                baseResult.Add("EyeBlink" + questionIndex.ToString(), EyeBlinkCount);
                 EyeBlinkCount = 0;
+               
             }
 
-            if (questionIndex == 5)
+            if (questionIndex >= 3 && questionIndex <=5 )
             {
-                baseLieResult.Add("LookAway", LostContactCount);
+                baseLieResult.Add("LookAway" + questionIndex.ToString(), LostContactCount);
                 LostContactCount = 0;
-                baseLieResult.Add("MouthTouch", MouthCoverCount);
+                baseLieResult.Add("MouthTouch" + questionIndex.ToString(), MouthCoverCount);
                 MouthCoverCount = 0;
-                baseLieResult.Add("NoseTouch", NoseTouchCount);
+                baseLieResult.Add("NoseTouch" + questionIndex.ToString(), NoseTouchCount);
                 NoseTouchCount = 0;
-                baseLieResult.Add("SpeechGap", SpeechGapCount);
+                baseLieResult.Add("SpeechGap" + questionIndex.ToString(), SpeechGapCount);
                 SpeechGapCount = 0;
-                baseLieResult.Add("EyeBrows", EyeBrowCount);
+                baseLieResult.Add("EyeBrows" + questionIndex.ToString(), EyeBrowCount);
                 EyeBrowCount = 0;
-                baseLieResult.Add("EyeBlink", EyeBlinkCount);
+                baseLieResult.Add("EyeBlink" + questionIndex.ToString(), EyeBlinkCount);
                 EyeBlinkCount = 0;
+                
             }
-            if(questionIndex == 6 )
+
+            //TODO: add a more sophisticated form of calculating lie detection
+            if (questionIndex >= 6)
             {
+                var strMouthTouchResultIndex = string.Format("MouthTouch{0}", questionIndex );
+                var strLookAwayResultIndex = string.Format("LookAway{0}", questionIndex);
+                var strNoseTouchResultIndex = string.Format("NoseTouch{0}", questionIndex);
+                var strSpeechResultIndex = string.Format("SpeechGap{0}", questionIndex );
+                var strEyeBrowsResultIndex = string.Format("EyeBrows{0}", questionIndex );
+                var strEyeBlinkResultIndex = string.Format("EyeBlink{0}", questionIndex);
+
+
                 //Compare results
-                results.Add("LookAway", LostContactCount);
+                results.Add(strLookAwayResultIndex, LostContactCount);
                 LostContactCount = 0;
-                results.Add("MouthTouch", MouthCoverCount);
+                results.Add(strMouthTouchResultIndex, MouthCoverCount);
                 MouthCoverCount = 0;
-                results.Add("NoseTouch", NoseTouchCount);
+                results.Add(strNoseTouchResultIndex, NoseTouchCount);
                 NoseTouchCount = 0;
-                results.Add("SpeechGap", SpeechGapCount);
+                results.Add(strSpeechResultIndex, SpeechGapCount);
                 SpeechGapCount = 0;
-                results.Add("EyeBrows", EyeBrowCount);
+                results.Add(strEyeBrowsResultIndex, EyeBrowCount);
                 EyeBrowCount = 0;
-                results.Add("EyeBlink", EyeBlinkCount);
+                results.Add(strEyeBlinkResultIndex, EyeBlinkCount);
                 EyeBlinkCount = 0;
 
-                var MouthTouchCompare = baseLieResult["MouthTouch"];
-                var MouthTouchLie = baseResult["MouthTouch"];
-                if (results["MouthTouch"] - MouthTouchCompare < results["MouthTouch"] - MouthTouchLie)
-                    LieDetection = "It appears you lied on due to your mouth fidgeting contact";
+                int MouthLieTouchCompare = 0;
+                int LookAwayLieCompare = 0;
+                int EyeBrowsLieCompare = 0;
+                int EyeBlinkLieCompare = 0;
+                int NoseTouchLieCompare = 0;
+                int SpeechGapLieCompare = 0;
 
-                var lookawayCompare = baseLieResult["LookAway"];
-                var lookawayLie = baseResult["LookAway"];
-                if (results["LookAway"] - lookawayCompare < results["LookAway"] - lookawayLie)
-                    LieDetection = "It appears you lied on due to your eye contact";
+                for (int i = 3; i<6; i++)
+                {
+                    var strMouthIndex = string.Format("MouthTouch{0}", i);
+                    MouthLieTouchCompare += (int)baseLieResult[strMouthIndex];
 
-                var EyeBrowCompare = baseLieResult["EyeBrows"];
-                var EyeBrowLie = baseResult["EyeBrows"];
-                if (results["EyeBrows"] - EyeBrowCompare < results["EyeBrows"] - EyeBrowLie)
-                    LieDetection = "It appears you lied on due to your eye brow movement";
+                    var strLookAwayIndex = string.Format("LookAway{0}", i);
+                    LookAwayLieCompare += (int)baseLieResult[strLookAwayIndex];
 
-                var EyeBlinkCompare = baseLieResult["EyeBlink"];
-                var EyeBlinkLie = baseResult["EyeBlink"];
-                if (results["EyeBlink"] - EyeBlinkCompare < results["EyeBlink"] - EyeBlinkLie)
-                    LieDetection = "It appears you lied on due to your eye extended blinking";
+                    var strEyeBrowsIndex = string.Format("EyeBrows{0}", i);
+                    EyeBrowsLieCompare += (int)baseLieResult[strEyeBrowsIndex];
 
+                    var strEyeBlinkIndex = string.Format("EyeBlink{0}", i);
+                    EyeBlinkLieCompare += (int)baseLieResult[strEyeBlinkIndex];
 
-            }
-            else if (questionIndex > 6)
-            {
-                
-                    //Compare results
-                    results["LookAway"] = LostContactCount;
-                    LostContactCount = 0;
-                    results["MouthTouch"] = MouthCoverCount;
-                    MouthCoverCount = 0;
-                    results["NoseTouch"] = NoseTouchCount;
-                    NoseTouchCount = 0;
-                    results["SpeechGap"] = SpeechGapCount;
-                    SpeechGapCount = 0;
-                    results["EyeBrows"]= EyeBrowCount;
-                    EyeBrowCount = 0;
-                    results["EyeBlink"]= EyeBlinkCount;
-                    EyeBlinkCount = 0;
+                    var strNoseTouchIndex = string.Format("NoseTouch{0}", i);
+                    NoseTouchLieCompare += (int)baseLieResult[strNoseTouchIndex];
 
-                    var MouthTouchCompare = baseLieResult["MouthTouch"];
-                    var MouthTouchLie = baseResult["MouthTouch"];
-                    if (results["MouthTouch"] - MouthTouchCompare < results["MouthTouch"] - MouthTouchLie)
-                        LieDetection = "It appears you lied on due to your mouth fidgeting contact";
+                    var strSpeechGapIndex = string.Format("SpeechGap{0}", i);
+                    SpeechGapLieCompare += (int)baseLieResult[strSpeechGapIndex];
 
-                    var lookawayCompare = baseLieResult["LookAway"];
-                    var lookawayLie = baseResult["LookAway"];
-                    if (results["LookAway"] - lookawayCompare < results["LookAway"] - lookawayLie)
-                        LieDetection = "It appears you lied on due to your eye contact";
+                }
 
-                    var EyeBrowCompare = baseLieResult["EyeBrows"];
-                    var EyeBrowLie = baseResult["EyeBrows"];
-                    if (results["EyeBrows"] - EyeBrowCompare < results["EyeBrows"] - EyeBrowLie)
-                        LieDetection = "It appears you lied on due to your eye brow movement";
+                var avgMouthTouchLieCount = MouthLieTouchCompare / 3;
+                var avgLookAwayLieCount = LookAwayLieCompare / 3;
+                var avgEyeBrowLieCount = EyeBrowsLieCompare / 3;
+                var avgEyeBlinkLieCount = EyeBlinkLieCompare / 3;
+                var avgNoseLieCount = NoseTouchLieCompare / 3;
+                var avgSpeechLieCount = SpeechGapLieCompare / 3;
 
-                    var EyeBlinkCompare = baseLieResult["EyeBlink"];
-                    var EyeBlinkLie = baseResult["EyeBlink"];
-                    if (results["EyeBlink"] - EyeBlinkCompare < results["EyeBlink"] - EyeBlinkLie)
-                        LieDetection = "It appears you lied on due to your eye extended blinking";
+                if (System.Math.Abs((int)results[strMouthTouchResultIndex] - (int)avgMouthTouchLieCount) <= 1)
+                {
+                    LieDetection += "It appears as though you lied based on your mouth touching. ";
+                    webView.Navigate(new Uri("ms-appx-web:///Assets/liar.html"));
 
+                }
+                else
+                {
+                    webView.Navigate(new Uri("ms-appx-web:///Assets/default.html"));
+                }
 
-                
+                if (System.Math.Abs((int)results[strNoseTouchResultIndex] - (int)avgNoseLieCount) <= 1)
+                {
+                    LieDetection += " It appears as though you lied based on your nose touching. ";
+                    webView.Navigate(new Uri("ms-appx-web:///Assets/liar.html"));
+
+                }
+                else
+                {
+                    webView.Navigate(new Uri("ms-appx-web:///Assets/default.html"));
+                }
+
+                if (System.Math.Abs((int)results[strEyeBlinkResultIndex] - (int)avgEyeBlinkLieCount) <= 1)
+                {
+                    LieDetection += " It appears as though you lied based on your extended eye blinking. ";
+                    webView.Navigate(new Uri("ms-appx-web:///Assets/liar.html"));
+
+                }
+                else
+                {
+                    webView.Navigate(new Uri("ms-appx-web:///Assets/default.html"));
+                }
+
+                if (System.Math.Abs((int)results[strEyeBrowsResultIndex] - (int)avgEyeBrowLieCount) <= 1)
+                {
+                    LieDetection = " It appears as though you lied based on your eye brow movement. ";
+                    webView.Navigate(new Uri("ms-appx-web:///Assets/liar.html"));
+
+                }
+                else
+                {
+                    webView.Navigate(new Uri("ms-appx-web:///Assets/default.html"));
+                }
+
+                if (System.Math.Abs((int)results[strSpeechResultIndex] - (int)avgSpeechLieCount) <= 1)
+                {
+                    LieDetection += " It appears as though you lied based on your speech analysis. ";
+                    webView.Navigate(new Uri("ms-appx-web:///Assets/liar.html"));
+
+                }
+                else
+                {
+                    webView.Navigate(new Uri("ms-appx-web:///Assets/default.html"));
+                }
+
             }
             questionIndex++;
+            if (questionIndex < 10)
+                CurrentQuestion = questions[questionIndex];
+            else
+            {
+                CurrentQuestion = string.Empty;
+                LieDetection = string.Empty;
+                questionIndex = -1;
+                baseResult.Clear();
+                baseLieResult.Clear();
+                results.Clear();
+                btnNext.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                webView.Navigate(new Uri("ms-appx-web:///Assets/default.html"));
+            }
+        }
+
+        private void btnStart_Click(object sender, RoutedEventArgs e)
+        {
+            questionIndex = 0;
+            CurrentQuestion = questions[0];
+            webView.Navigate(new Uri("ms-appx-web:///Assets/default.html"));
+            btnNext.Visibility = Windows.UI.Xaml.Visibility.Visible;
+
+            EyeBlinkCount = 0;
+            EyeBrowCount = 0;
+            LostContactCount = 0;
+            SpeechGapCount = 0;
+            MouthCoverCount = 0;
+            NoseTouchCount = 0;
         }
 
 
