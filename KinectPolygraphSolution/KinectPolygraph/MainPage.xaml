@@ -5,44 +5,52 @@
     xmlns:local="using:KinectPolygraph"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tri="using:TriGemini.Controls"
     mc:Ignorable="d">
-    
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-      
-        <StackPanel Orientation="Horizontal">
-            <StackPanel Width="600" Margin="30"  >
+        <StackPanel Orientation="Horizontal" Margin="30">
                 
-                <Image x:Name="imgLie" Source="C:\codeplex_tfs\KinectPolygraph\KinectPolygraphSolution\KinectPolygraph\Images\pinocchio-o.gif" Stretch="UniformToFill" Width="300" Height="300"  HorizontalAlignment="Center" Margin="0 0 0 5" Visibility="Visible" ></Image>
-                <TextBlock x:Name="txtLieResult" FontSize="30" Text="{Binding Path=LieDetection }"></TextBlock>
-                <TextBlock x:Name="txtQuestions" FontSize="30"   Text="{Binding Path=CurrentQuestion}">Questions:</TextBlock>
-                <Button x:Name="btnNext"  Click="btnNext_Click">Next</Button> 
+            <StackPanel Width="600" Margin="30"  >
+                <WebView x:Name="webView" Width="300" Height="300" Source="ms-appx-web:///Assets/default.html" Visibility="Visible"  DefaultBackgroundColor="Black" />
+           
+                <TextBlock x:Name="txtLieResult" FontSize="10" Text="{Binding LieDetection}" TextWrapping="Wrap"/>
+                <TextBlock x:Name="txtQuestions" FontSize="30"   Text="{Binding CurrentQuestion}" TextWrapping="Wrap">
+                	<Run Text="Questions:"/>
+</TextBlock>
+                <StackPanel Orientation="Horizontal" >
+                    <Button x:Name="btnStart" Click="btnStart_Click" Content="Start Questions" />
+                    <Button x:Name="btnNext"  Click="btnNext_Click" Content="Next" Visibility="Collapsed"/>
+                </StackPanel>
+                
             </StackPanel>
-        <StackPanel>
-            <StackPanel Orientation="Horizontal" >
-                <TextBlock Text="Lost Eye Contact Count:" FontSize="40"></TextBlock>
-                <TextBlock x:Name="txtEyeContactLostCount" FontSize="40" Text="{Binding Path=LostContactCount}"></TextBlock>
+            <StackPanel Margin="10">
+                <TextBlock x:Name="PersonFound" FontSize="40" Foreground="Blue" Text="" />
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Text="Lost Eye Contact Count:" FontSize="40"/>
+                    <TextBlock x:Name="txtEyeContactLostCount" FontSize="40" Text="{Binding LostContactCount}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Text="Extended Eye Blink Count:" FontSize="40"/>
+                    <TextBlock x:Name="txtExtendedBlinkCount" FontSize="40" Text="{Binding EyeBlinkCount}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Text="Eye Brows Count:" FontSize="40"/>
+                    <TextBlock x:Name="txtEyeBrowCount" FontSize="40" Text="{Binding EyeBrowCount}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Text="Speech Gap Count:" FontSize="40"/>
+                    <TextBlock x:Name="txtSpeechGapCount" FontSize="40" Text="{Binding SpeechGapCount}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Text="Nose Touch Count:" FontSize="40"/>
+                    <TextBlock x:Name="txtNoseTouchCount" FontSize="40" Text="{Binding NoseTouchCount}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Text="Mouth Cover Count:" FontSize="40"/>
+                    <TextBlock x:Name="txtMouthCoverCount" FontSize="40" Text="{Binding MouthCoverCount}"/>
+                </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" >
-                <TextBlock Text="Extended Eye Blink Count:" FontSize="40"></TextBlock>
-                <TextBlock x:Name="txtExtendedBlinkCount" FontSize="40" Text="{Binding Path=EyeBlinkCount}"></TextBlock>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" >
-                <TextBlock Text="Eye Brows Count:" FontSize="40"></TextBlock>
-                <TextBlock x:Name="txtEyeBrowCount" FontSize="40" Text="{Binding Path=EyeBrowCount}"></TextBlock>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" >
-                <TextBlock Text="Speech Gap Count:" FontSize="40"></TextBlock>
-                <TextBlock x:Name="txtSpeechGapCount" FontSize="40" Text="{Binding Path=SpeechGapCount}"></TextBlock>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" >
-                <TextBlock Text="Nose Touch Count:" FontSize="40"></TextBlock>
-                <TextBlock x:Name="txtNoseTouchCount" FontSize="40" Text="{Binding Path=NoseTouchCount}"></TextBlock>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" >
-                <TextBlock Text="Mouth Cover Count:" FontSize="40"></TextBlock>
-                <TextBlock x:Name="txtMouthCoverCount" FontSize="40" Text="{Binding Path=MouthCoverCount}"></TextBlock>
-            </StackPanel>
-        </StackPanel>
         </StackPanel>
     </Grid>
 </Page>

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WindowsPreview.Kinect;
 using Microsoft.Kinect;
-using AForge.Math;
+
 
 
 namespace KinectPolygraph

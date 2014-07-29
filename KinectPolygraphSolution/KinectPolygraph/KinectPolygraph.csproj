@@ -138,12 +138,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\default.html" />
+    <Content Include="Assets\liar.html" />
     <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
-    <Content Include="Images\piconocio-nolie-o.gif" />
-    <Content Include="Images\pinocchio-o.gif" />
+    <Content Include="Assets\piconocio-nolie-o.gif" />
+    <Content Include="Assets\pinocchio-o.gif" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -156,6 +158,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Images\" />
     <Folder Include="NuiDatabase\Expression\" />
     <Folder Include="NuiDatabase\HDFaceTracker\AAMModel\" />
     <Folder Include="NuiDatabase\HDFaceTracker\EvalModel\" />
@@ -164,14 +167,6 @@
     <Folder Include="NuiDatabase\HDFaceTracker\SkintoneModel\" />
     <Folder Include="NuiDatabase\HDFaceTracker\ViewModel\" />
     <Folder Include="NuiDatabase\HDFaceTracker\WholeHeadModel\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
-      <HintPath>..\packages\AForge.2.2.5\lib\AForge.dll</HintPath>
-    </Reference>
-    <Reference Include="AForge.Math, Version=2.2.5.0, Culture=neutral, PublicKeyToken=abba2e25397ee8c9, processorArchitecture=MSIL">
-      <HintPath>..\packages\AForge.Math.2.2.5\lib\AForge.Math.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
